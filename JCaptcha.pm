@@ -3,6 +3,7 @@ package JCaptcha; # クラスのパッケージ名を宣言
 # タイトル：かんたん日本語画像認証（アルファベットも可）
 # 動作環境：UNIX系OS （Windowsでは正常に動作しません）
 # 作者：ORBIT
+# 開発者ブログ：http://www.orsx.net/blog/
 ############################################################
 
 use strict;
@@ -33,7 +34,7 @@ sub new{
 	$self->{ Color }  = 'red'                   unless defined $self->{ Color };
 	# 文字の長さ
 	$self->{ Length } = '5'                     unless defined $self->{ Length };
-	# 有効期限(1日÷4時間で0.25＝6時間)
+	# 有効期限(1日÷4で0.25＝6時間)
 	$self->{ Limit }  = '0.25'                  unless defined $self->{ Limit };
 	# 認証画像の保存場所
 	$self->{ Imgdir } = './tmp/imgs/'           unless defined $self->{ Imgdir };
@@ -50,7 +51,7 @@ sub md5 {
 	my $self = shift; #クラスプロパティ
 
 	#print "MD51: $self->{ Code } , $self->{ Key }\n"; # デバッグ
-	# 入力されたデータを暗号化(MD5) Windowsでは何故か正常に動かない・・・
+	# 入力されたデータを暗号化(MD5) Windowsではcrypt関数の仕様上正常に動きません
 	$self->{ Code } = crypt ($self->{ Code },'$1$'.$self->{ Key });
 	$self->{ Code } =~ /.*\$1\$$self->{ Key }\$(.*).*/;
 	$self->{ Code } = $1;
